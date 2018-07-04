@@ -35,7 +35,21 @@ class App extends Component {
 	}
 
 	onDismiss(id){
+		// function isNotId(item){
+		// 	return item.objectID !== id;
+		// });
+		// const updatedList = this.state.list.filter(isNotId);
 
+		// ES6 => 
+		const isNotId = item => item.objectID !== id;
+		const updatedList = this.state.list.filter(isNotId);
+
+		// or one-liner
+
+		// const updatedList = this.state.list.filter(item => item.objectID !== id);
+
+		// updating the state in the internal component state
+		this.setState({list: updatedList});
 	}
 
   render() {
