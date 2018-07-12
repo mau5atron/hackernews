@@ -23,15 +23,33 @@ const list = [
 ];
 
 
+// isSearched(searchTerm) {
+// 	return item => {
+// 		// some condition which returns true or false
+// 		// matches incoming search term property title
+// 		return item.title.toLowerCase().includes(searchTerm.toLowerCase());
+// 	}
+// 
+
+// use higher order es6 version 
+
+const isSearched = searchTerm => item => 
+	// some condition which returns true or false 
+	// matches incoming search term property title
+	item.title.toLowerCase().includes(searchTerm.toLowerCase());	
+
+
 class App extends Component {
 	constructor(props){
 		super(props);
 
 		this.state = {
 			list,
+			searchTerm: '',
 		}
 
 		this.onDismiss = this.onDismiss.bind(this); // binding onDismiss to object class
+		this.onSearchChange = this.onSearchChange.bind(this); // binding onSearch change to object class
 	}
 
 	onDismiss(id){
@@ -52,10 +70,19 @@ class App extends Component {
 		this.setState({list: updatedList});
 	}
 
+
+	onSearchChange(event){
+		this.setState({ searchTerm: event.target.value });
+		// do not forget to define the initial state for the searchTerm in the constructor 
+	}
+
   render() {
     return (
       <div className="App">
-      	{this.state.list.map(
+      	<form>
+      		<input type="text" onChange={this.onSearchChange}/>
+      	</form>
+      	{this.state.list.filter(isSearched(this.state.searchTerm)).map(
       		item => 
       			<div key={item.objectID}>
       				<span>
@@ -81,3 +108,4 @@ class App extends Component {
 }
 
 export default App;
+
