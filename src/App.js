@@ -98,16 +98,13 @@ class App extends Component {
   }
 }
 
-class Search extends Component {
-	render(){
-		const { value, onChange, children } = this.props;
-		return(
-    	<form>
-    		{children} <input type="text" value={value} onChange={this.onSearchChange}/>
-    	</form>
-		);
-	}
-}
+// concise stateless component
+const Search = ({value, onChange, children}) =>
+	// const { value, onChange, children } = props;
+	<form>
+		{children} <input type="text" value={value} onChange={onChange}/>
+	</form>
+
 
 class Table extends Component {
 	render(){
