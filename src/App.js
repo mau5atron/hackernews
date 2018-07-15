@@ -84,11 +84,11 @@ class App extends Component {
       <div className="App">
 
       	{/*this will be the search component*/}
-      {/*value is = to searchTerm, when the component is created below, value is = to value when called + references searchTerm*/}
-      	<Search value={searchTerm} onChange={this.onSearchChange}/>
+      	{/*value is = to searchTerm, when the component is created below, value is = to value when called + references searchTerm*/}
+      	<Search value={searchTerm} onChange={this.onSearchChange}>
+      	Search
+      	</Search>
 				
-
-
 				{/*this will be the table component*/}
 				{/*pattern is = searchTerm, when the component is created below, pattern is = pattern when called + references searchTem*/}
 				<Table list={list} pattern={searchTerm} onDismiss={this.onDismiss} />
@@ -98,19 +98,16 @@ class App extends Component {
   }
 }
 
-
-
 class Search extends Component {
 	render(){
-		const { value, onChange } = this.props;
+		const { value, onChange, children } = this.props;
 		return(
     	<form>
-    		<input type="text" value={value} onChange={this.onSearchChange}/>
+    		{children} <input type="text" value={value} onChange={this.onSearchChange}/>
     	</form>
 		);
 	}
 }
-
 
 class Table extends Component {
 	render(){
