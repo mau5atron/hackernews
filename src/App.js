@@ -31,8 +31,9 @@ const list = [
 // 	}
 // 
 
-// use higher order es6 version 
 
+
+// use higher order es6 version 
 const isSearched = searchTerm => item => 
 	// some condition which returns true or false 
 	// matches incoming search term property title
@@ -77,34 +78,66 @@ class App extends Component {
 	}
 
   render() {
+  	const { searchTerm, list } = this.state;
+  	// replaces this.state in the form when handling state, consider it destructuring
     return (
       <div className="App">
-      	<form>
-      		<input type="text" onChange={this.onSearchChange}/>
-      	</form>
-      	{this.state.list.filter(isSearched(this.state.searchTerm)).map(
-      		item => 
-      			<div key={item.objectID}>
-      				<span>
-      					<a href={item.url}>{item.title}</a>
-      				</span>
-      				<span>{item.author}</span>
-      				<span>{item.num_comments}</span>
-      				<span>{item.points}</span>
-      				<span>
-      					<button onClick={() =>
-      						this.onDismiss(item.objectID)
-      					} type="button">
-      						dismiss
-      					</button>
-      				</span>
-      				<hr/>
-      			</div>
-   				)
-      	}
+
+      	{/*this will be the search component*/}
+      {/*value is = to searchTerm, when the component is created below, value is = to value when called + references searchTerm*/}
+      	<Search value={searchTerm} onChange={this.onSearchChange}/>
+				
+
+
+				{/*this will be the table component*/}
+				{/*pattern is = searchTerm, when the component is created below, pattern is = pattern when called + references searchTem*/}
+				<Table list={list} pattern={searchTerm} onDismiss={this.onDismiss} />
+
       </div>
     );
   }
+}
+
+
+
+class Search extends Component {
+	render(){
+		const { value, onChange } = this.props;
+		return(
+    	<form>
+    		<input type="text" value={value} onChange={this.onSearchChange}/>
+    	</form>
+		);
+	}
+}
+
+
+class Table extends Component {
+	render(){
+		const { list, pattern, onDismiss } = this.props;
+		return(
+		<div>
+    	{list.filter(isSearched(pattern)).map(item => 
+    			<div key={item.objectID}>
+    				<span>
+    					<a href={item.url}>{item.title}</a>
+    				</span>
+    				<span>{item.author}</span>
+    				<span>{item.num_comments}</span>
+    				<span>{item.points}</span>
+    				<span>
+    					<button onClick={() =>
+    						this.onDismiss(item.objectID)
+    					} type="button">
+    						dismiss
+    					</button>
+    				</span>
+    				<hr/>
+    			</div>
+ 			)}
+    </div>
+		);
+	}
 }
 
 export default App;
