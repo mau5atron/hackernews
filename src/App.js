@@ -124,9 +124,7 @@ class Table extends Component {
     				<span>{item.points}</span>
     				<span>
     					<button onClick={() =>
-    						this.onDismiss(item.objectID)
-    					} type="button">
-    						dismiss
+    						onDismiss(item.objectID)} type="button">Dismiss
     					</button>
     				</span>
     				<hr/>
@@ -137,5 +135,41 @@ class Table extends Component {
 	}
 }
 
+class Button extends Component {
+	render(){
+		const {
+			onClick, 
+			className='',
+			children,
+		} = this.props;
+
+		return(
+			<button onClick={onClick} className={className} type="button">
+				{children}
+			</button>	
+		);
+	}
+}
+
+
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
