@@ -81,13 +81,14 @@ class App extends Component {
   	const { searchTerm, list } = this.state;
   	// replaces this.state in the form when handling state, consider it destructuring
     return (
-      <div className="App">
-
-      	{/*this will be the search component*/}
-      	{/*value is = to searchTerm, when the component is created below, value is = to value when called + references searchTerm*/}
-      	<Search value={searchTerm} onChange={this.onSearchChange}>
-      	Search
-      	</Search>
+      <div className="page">
+				<div className="interactions">
+	      	{/*this will be the search component*/}
+	      	{/*value is = to searchTerm, when the component is created below, value is = to value when called + references searchTerm*/}
+	      	<Search value={searchTerm} onChange={this.onSearchChange}>
+	      	Search
+	      	</Search>
+				</div>
 				
 				{/*this will be the table component*/}
 				{/*pattern is = searchTerm, when the component is created below, pattern is = pattern when called + references searchTem*/}
@@ -107,18 +108,18 @@ const Search = ({value, onChange, children}) =>
 
 const Table = ({list, pattern, onDismiss}) => 
 		// const { list, pattern, onDismiss } = this.props;
-	<div>
+	<div className="table">
   	{
   		list.filter(isSearched(pattern)).map(item => 
-  			<div key={item.objectID}>
-  				<span>
+  			<div key={item.objectID} className="table-row">
+  				<span style={{ width: '40%' }}>
   					<a href={item.url}> {item.title} </a>
   				</span>
-  				<span>{item.author}</span>
-  				<span>{item.num_comments}</span>
-  				<span>{item.points}</span>
-  				<span>
-  					<button onClick={() => onDismiss(item.objectID)} type="button">
+  				<span style={{ width: '30%' }}>{item.author}</span>
+  				<span style={{ width: '10%' }}>{item.num_comments}</span>
+  				<span style={{ width: '10%' }}>{item.points}</span>
+  				<span style={{ width: '10%' }}>
+  					<button onClick={() => onDismiss(item.objectID)} type="button" className="button-inline">
   						Dismiss
   					</button>
   				</span>
