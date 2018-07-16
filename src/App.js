@@ -42,21 +42,14 @@ class App extends Component {
 			.catch(error => error);
 	}
 	onDismiss(id){
-		// function isNotId(item){
-		// 	return item.objectID !== id;
-		// });
-		// const updatedList = this.state.list.filter(isNotId);
-
 		// ES6 const function => 
 		const isNotId = item => item.objectID !== id;
-		const updatedList = this.state.list.filter(isNotId);
-
-		// or one-liner
-
-		// const updatedList = this.state.list.filter(item => item.objectID !== id);
-
-		// updating the state in the internal component state
-		this.setState({list: updatedList});
+		const updatedHits = this.state.result.hits.filter(isNotId);
+		this.setState({
+			// result: Object.assign({}, this.state.result, { hits: updatedHits })
+			// used spread operator to join objects instead of Object.assign();
+			result: { ...this.state.result, hits: updatedHits }
+		});
 	}
 
 
@@ -82,8 +75,11 @@ class App extends Component {
 				
 				{/*this will be the table component*/}
 				{/*pattern is = searchTerm, when the component is created below, pattern is = pattern when called + references searchTem*/}
-				<Table list={result.hits} pattern={searchTerm} onDismiss={this.onDismiss} />
-
+				
+				{/*conditional rendering happening here*/}
+				{ 	
+					result && <Table list={result.hits} pattern={searchTerm} onDismiss={this.onDismiss} />
+				}
       </div>
     );
   }
