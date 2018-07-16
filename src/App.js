@@ -1,37 +1,13 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 
-
-const list = [
-	{
-		title: 'React',
-		url: 'https://facebook.github.io/react/',
-		author: 'Jordan Walke',
-		num_comments: 3,
-		points: 4,
-		objectID: 0
-	},
-	{
-		title: 'Redux',
-		url: 'https://github.com/reactjs/redux',
-		author: 'Dan Abramov, Andrew Clark',
-		num_comments: 2,
-		points: 5,
-		objectID: 1 
-	},
-];
-
-
-// isSearched(searchTerm) {
-// 	return item => {
-// 		// some condition which returns true or false
-// 		// matches incoming search term property title
-// 		return item.title.toLowerCase().includes(searchTerm.toLowerCase());
-// 	}
-// 
-
-
+const DEFAULT_QUERY = 'redux';
+const PATH_BASE = 'https://hn.algolia.com/api/v1';
+const PATH_SEARCH = '/search';
+const PARAM_SEARCH = 'query=';
+const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${DEFAULT_QUERY}`;
+console.log(url);
 
 // use higher order es6 version 
 const isSearched = searchTerm => item => 
@@ -45,14 +21,26 @@ class App extends Component {
 		super(props);
 
 		this.state = {
-			list,
-			searchTerm: '',
+			result: null,
+			searchTerm: DEFAULT_QUERY,
 		}
-
+		this.setSearchTopStories = this.setSearchTopStories.bind(this);
 		this.onDismiss = this.onDismiss.bind(this); // binding onDismiss to object class
 		this.onSearchChange = this.onSearchChange.bind(this); // binding onSearch change to object class
 	}
+	
+	setSearchTopStories(result){
+		this.setState({result});
+	}
+	
+	componentDidMount(){
+		const { searchTerm } = this.setState;
 
+		fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
+			.then(response => response.json())
+			.then(result => this.setSearchTopStories(result))
+			.catch(error => error);
+	}
 	onDismiss(id){
 		// function isNotId(item){
 		// 	return item.objectID !== id;
@@ -78,8 +66,10 @@ class App extends Component {
 	}
 
   render() {
-  	const { searchTerm, list } = this.state;
   	// replaces this.state in the form when handling state, consider it destructuring
+  	const { searchTerm, result } = this.state;
+  	// if result does not exist return null
+  	if (!result){ return null; }
     return (
       <div className="page">
 				<div className="interactions">
@@ -92,7 +82,7 @@ class App extends Component {
 				
 				{/*this will be the table component*/}
 				{/*pattern is = searchTerm, when the component is created below, pattern is = pattern when called + references searchTem*/}
-				<Table list={list} pattern={searchTerm} onDismiss={this.onDismiss} />
+				<Table list={result.hits} pattern={searchTerm} onDismiss={this.onDismiss} />
 
       </div>
     );
