@@ -105,11 +105,11 @@ const Search = ({value, onChange, children}) =>
 		{children} <input type="text" value={value} onChange={onChange}/>
 	</form>
 
-
 const Table = ({list, pattern, onDismiss}) => 
 		// const { list, pattern, onDismiss } = this.props;
 	<div>
-  	{list.filter(isSearched(pattern)).map(item => 
+  	{
+  		list.filter(isSearched(pattern)).map(item => 
   			<div key={item.objectID}>
   				<span>
   					<a href={item.url}>{item.title}</a>
@@ -118,31 +118,21 @@ const Table = ({list, pattern, onDismiss}) =>
   				<span>{item.num_comments}</span>
   				<span>{item.points}</span>
   				<span>
-  					<button onClick={() =>
-  						onDismiss(item.objectID)} type="button">Dismiss
+  					<button onClick={() => onDismiss(item.objectID)} type="button">
+  						Dismiss
   					</button>
   				</span>
   				<hr/>
   			</div>
-			)}
+			)
+  	}
   </div>
 
-class Button extends Component {
-	render(){
-		const {
-			onClick, 
-			className='',
-			children,
-		} = this.props;
-
-		return(
-			<button onClick={onClick} className={className} type="button">
-				{children}
-			</button>	
-		);
-	}
-}
-
+const Button = ({onClick, className='', children}) => 
+		// const { onClick, className='', children, } = this.props;
+	<button onClick={onClick} className={className} type="button">
+		{children}
+	</button>	
 
 export default App;
 
