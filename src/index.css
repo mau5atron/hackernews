@@ -1,5 +1,56 @@
+/* index page styling */
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+	color: black;
+	background: white;
+	font: 400 20px CoreSans, Arial, sans-serif;
+	letter-spacing: 1px;
 }
+
+a {
+	color: red;
+	text-decoration: none;
+}
+
+a:hover {
+	color: green;
+}
+
+ul, li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+input {
+	padding: 10px;
+	border-radius: 5px;
+	outline: none;
+	margin-right: 10px;
+	border: 1px solid grey;
+}
+
+button {
+	padding: 10px;
+	border-radius: 5px;
+	border: 1px solid grey;
+	background: transparent;
+	color: #808080;
+	cursor: pointer;
+}
+
+button:hover {
+	color: #222;
+}
+
+*:focus {
+	outline: none;
+}
+
+
+
+
+
+
+
+
+

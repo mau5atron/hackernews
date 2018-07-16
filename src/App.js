@@ -112,7 +112,7 @@ const Table = ({list, pattern, onDismiss}) =>
   		list.filter(isSearched(pattern)).map(item => 
   			<div key={item.objectID}>
   				<span>
-  					<a href={item.url}>{item.title}</a>
+  					<a href={item.url}> {item.title} </a>
   				</span>
   				<span>{item.author}</span>
   				<span>{item.num_comments}</span>
@@ -122,7 +122,6 @@ const Table = ({list, pattern, onDismiss}) =>
   						Dismiss
   					</button>
   				</span>
-  				<hr/>
   			</div>
 			)
   	}
